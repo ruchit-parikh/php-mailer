@@ -1,0 +1,17 @@
+{
+    "name": "ruchitparikh/mailer",
+    "description": "A simple crud api using core php",
+    "require": {
+        "php": ">=8.0.0",
+        "ext-pdo": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
+    "autoload":	{
+        "psr-4": {
+            "Mailer\\": "src/",
+            "App\\": "app/"
+        }
+    }
+}
