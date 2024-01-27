@@ -26,14 +26,14 @@ class PaginatedCollection
 
     /**
      * @param array $data
-     * @param int $page
-     * @param int $limit
-     * @param int $total
+     * @param int   $page
+     * @param int   $limit
+     * @param int   $total
      */
     public function __construct(array $data, int $page, int $limit, int $total)
     {
-        $this->data = $data;
-        $this->page = $page;
+        $this->data  = $data;
+        $this->page  = $page;
         $this->limit = $limit;
         $this->total = $total;
     }

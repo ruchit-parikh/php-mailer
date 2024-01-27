@@ -2,8 +2,8 @@
 
 namespace App\Subscribers\Models;
 
-use Mailer\Contracts\Model;
 use App\Subscribers\Entities\Subscriber as SubscriberEntity;
+use Mailer\Contracts\Model;
 
 class Subscriber extends Model
 {

@@ -36,7 +36,7 @@ class Entity
 
     /**
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return void
      */
@@ -46,9 +46,7 @@ class Entity
             $type = $this->types[$key];
 
             $this->attributes[$key] = $value instanceof $type ? $value : new $type($value);
-        }
-        else
-        {
+        } else {
             $this->attributes[$key] = $value;
         }
     }

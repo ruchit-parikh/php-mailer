@@ -6,6 +6,7 @@
         "ext-pdo": "*"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.4",
         "phpunit/phpunit": "3.7.*"
     },
     "autoload":	{
@@ -13,5 +14,9 @@
             "Mailer\\": "src/",
             "App\\": "app/"
         }
+    },
+    "scripts": {
+        "lint": "@php vendor/bin/php-cs-fixer fix -v --dry-run",
+        "fix": "@php vendor/bin/php-cs-fixer fix"
     }
 }

@@ -14,8 +14,7 @@ abstract class Kernel
      */
     public static function getInstance(): static
     {
-        if (static::$instance)
-        {
+        if (static::$instance) {
             return static::$instance;
         }
 
@@ -34,10 +33,10 @@ abstract class Kernel
 
     protected function __construct()
     {
-        $routerClass = $this->getRouterClass();
+        $routerClass  = $this->getRouterClass();
         $this->router = new $routerClass;
 
-        $requestClass = $this->getRequestClass();
+        $requestClass  = $this->getRequestClass();
         $this->request = new $requestClass;
     }
 

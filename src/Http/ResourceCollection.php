@@ -42,8 +42,7 @@ abstract class ResourceCollection extends JsonResponse
     {
         $resources = [];
 
-        foreach ($data as $record)
-        {
+        foreach ($data as $record) {
             $resources[] = new static::$collects($record);
         }
 

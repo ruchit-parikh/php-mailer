@@ -28,13 +28,13 @@ class FormRequest extends Request
     public function validate(): array
     {
         $messages = [];
-        $rules = $this->rules();
+        $rules    = $this->rules();
 
         foreach ($rules as $key => $fieldRules) {
             foreach ($fieldRules as $rule) {
-               if (is_string($rule)) {
-                   $rule = new $rule;
-               }
+                if (is_string($rule)) {
+                    $rule = new $rule;
+                }
 
                 /** @var Rule $rule */
                 $rule->setFieldName($key);

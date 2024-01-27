@@ -28,14 +28,14 @@ class Route
      * @param string $controller
      * @param string $method
      * @param string $request
-     * @param array $params
+     * @param array  $params
      */
     public function __construct(string $controller, string $method, string $request, array $params = [])
     {
         $this->controllerClass = $controller;
-        $this->method = $method;
-        $this->requestClass = $request;
-        $this->params = $params;
+        $this->method          = $method;
+        $this->requestClass    = $request;
+        $this->params          = $params;
     }
 
     /**

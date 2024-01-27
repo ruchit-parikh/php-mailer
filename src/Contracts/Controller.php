@@ -14,8 +14,7 @@ class Controller
      */
     public static function getInstance(): static
     {
-        if (static::$instance)
-        {
+        if (static::$instance) {
             return static::$instance;
         }
 

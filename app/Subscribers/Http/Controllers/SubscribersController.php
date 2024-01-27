@@ -33,9 +33,9 @@ class SubscribersController extends Controller
     /**
      * @param StoreSubscriberFormRequest $request
      *
-     * @return JsonResponse
-     *
      * @throws SubscriberAlreadyExistsException
+     *
+     * @return JsonResponse
      */
     public function post(StoreSubscriberFormRequest $request): JsonResponse
     {
@@ -49,11 +49,11 @@ class SubscribersController extends Controller
         }
 
         $subscriber = new Subscriber([
-            'first_name' => $request->getFirstName(),
-            'last_name' => $request->getLastName(),
-            'email' => $request->getEmail(),
-            'status' => $request->getStatus(),
-            'subscribed_at' => new DateTimeImmutable
+            'first_name'    => $request->getFirstName(),
+            'last_name'     => $request->getLastName(),
+            'email'         => $request->getEmail(),
+            'status'        => $request->getStatus(),
+            'subscribed_at' => new DateTimeImmutable,
         ]);
 
         return new JsonResponse(['success' => $repository->store($subscriber)]);
@@ -62,9 +62,9 @@ class SubscribersController extends Controller
     /**
      * @param Request $request
      *
-     * @return SubscriberResource
-     *
      * @throws SubscriberNotFoundException
+     *
+     * @return SubscriberResource
      */
     public function show(Request $request): SubscriberResource
     {

@@ -12,9 +12,9 @@ class UnprocessableQuery extends \Exception
     protected array $parts;
 
     /**
-     * @param array $parts
-     * @param string $message
-     * @param int $code
+     * @param array          $parts
+     * @param string         $message
+     * @param int            $code
      * @param Throwable|null $previous
      */
     public function __construct(array $parts, string $message = "", int $code = 0, ?Throwable $previous = null)

@@ -2,8 +2,8 @@
 
 namespace App\Http;
 
-use App\Subscribers\Http\Requests\StoreSubscriberFormRequest;
 use App\Subscribers\Http\Controllers\SubscribersController;
+use App\Subscribers\Http\Requests\StoreSubscriberFormRequest;
 use Mailer\Http\Kernel;
 
 $router = Kernel::getInstance()->getRouter();

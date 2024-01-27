@@ -19,8 +19,7 @@ class DBSubscribersRepository implements SubscribersRepository
      */
     public static function getInstance(): static
     {
-        if (static::$instance)
-        {
+        if (static::$instance) {
             return static::$instance;
         }
 
@@ -72,11 +71,11 @@ class DBSubscribersRepository implements SubscribersRepository
         return SubscriberModel::getInstance()
             ->query()
             ->insert([
-                'email' => $subscriber->getEmail(),
-                'first_name' => $subscriber->getFirstName(),
-                'last_name' => $subscriber->getLastName(),
-                'status' => $subscriber->getStatus(),
-                'subscribed_at' => $subscriber->getSubscribedAt()->format('Y-m-d H:i:s')
+                'email'         => $subscriber->getEmail(),
+                'first_name'    => $subscriber->getFirstName(),
+                'last_name'     => $subscriber->getLastName(),
+                'status'        => $subscriber->getStatus(),
+                'subscribed_at' => $subscriber->getSubscribedAt()->format('Y-m-d H:i:s'),
             ]);
     }
 }

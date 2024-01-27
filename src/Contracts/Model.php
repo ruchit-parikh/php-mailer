@@ -46,8 +46,7 @@ class Model
      */
     public static function getInstance(): static
     {
-        if (static::$instance)
-        {
+        if (static::$instance) {
             return static::$instance;
         }
 
@@ -77,7 +76,7 @@ class Model
     {
         if (is_string($select) && strpos($select, ',')) {
             $this->selects = array_unique([...$this->selects, ...explode(',', $select)]);
-        } else if (is_string($select) && !in_array($select, $this->selects)) {
+        } elseif (is_string($select) && !in_array($select, $this->selects)) {
             $this->selects[] = $select;
         } else {
             $this->selects = array_unique([...$this->selects, ...$select]);
@@ -111,7 +110,7 @@ class Model
     public function query(): static
     {
         $this->selects = [];
-        $this->wheres = [];
+        $this->wheres  = [];
 
         return $this;
     }
@@ -125,11 +124,11 @@ class Model
     public function get(?int $limit, ?int $page): PaginatedCollection
     {
         $query = $this->db->getDriver()->query([
-            'table' => $this->table,
+            'table'   => $this->table,
             'selects' => $this->selects,
-            'wheres' => $this->wheres,
-            'limit' => $limit ?? $this->defaultLimit,
-            'page' => $page ?? 1
+            'wheres'  => $this->wheres,
+            'limit'   => $limit ?? $this->defaultLimit,
+            'page'    => $page ?? 1,
         ]);
 
         $results = $this->db->fetchAll($query);
@@ -143,9 +142,9 @@ class Model
         }
 
         $query = $this->db->getDriver()->query([
-            'table' => $this->table,
+            'table'   => $this->table,
             'selects' => ['COUNT(*) as count'],
-            'wheres' => $this->wheres,
+            'wheres'  => $this->wheres,
         ]);
 
         $total = $this->db->fetch($query)['count'];
@@ -159,10 +158,10 @@ class Model
     public function first(): mixed
     {
         $query = $this->db->getDriver()->query([
-            'table' => $this->table,
+            'table'   => $this->table,
             'selects' => $this->selects,
-            'wheres' => $this->wheres,
-            'limit' => 1
+            'wheres'  => $this->wheres,
+            'limit'   => 1,
         ]);
 
         $result = $this->db->fetch($query);
@@ -196,8 +195,8 @@ class Model
         }
 
         $query = $this->db->getDriver()->query([
-            'table' => $this->table,
-            'insert' => true,
+            'table'   => $this->table,
+            'insert'  => true,
             'columns' => array_keys($data),
         ]);
 

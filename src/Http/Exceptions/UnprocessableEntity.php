@@ -13,9 +13,9 @@ class UnprocessableEntity extends \Exception
     protected array $errors;
 
     /**
-     * @param array $errors
-     * @param string $message
-     * @param int $code
+     * @param array          $errors
+     * @param string         $message
+     * @param int            $code
      * @param Throwable|null $previous
      */
     public function __construct(array $errors, string $message = "", int $code = 0, ?Throwable $previous = null)

@@ -33,7 +33,7 @@ class Database
 
     /**
      * @param string $query
-     * @param array $bindings
+     * @param array  $bindings
      *
      * @return bool
      */

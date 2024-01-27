@@ -5,8 +5,8 @@ namespace Mailer\Http;
 use Exception;
 use Mailer\Contracts\Controller;
 use Mailer\Contracts\Kernel as BaseKernel;
-use Mailer\Http\Exceptions\UnprocessableEntity;
 use Mailer\Contracts\Response as BaseResponse;
+use Mailer\Http\Exceptions\UnprocessableEntity;
 
 class Kernel extends BaseKernel
 {
@@ -50,7 +50,7 @@ class Kernel extends BaseKernel
             if ($request->isFormRequest()) {
                 /** @var FormRequest $requestClass */
                 $formRequest = new $requestClass;
-                $request = $formRequest->copyFromRequest($request);
+                $request     = $formRequest->copyFromRequest($request);
 
                 $errors = $request->validate();
 

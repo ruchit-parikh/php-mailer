@@ -6,8 +6,8 @@ use Mailer\Contracts\Request as BaseRequest;
 
 class Request extends BaseRequest
 {
-    const HTTP_NOT_FOUND = 404;
-    const UNPROCESSABLE_ENTITY = 422;
+    public const HTTP_NOT_FOUND       = 404;
+    public const UNPROCESSABLE_ENTITY = 422;
 
     /**
      * @var array
@@ -39,11 +39,11 @@ class Request extends BaseRequest
      */
     public function collectData(): void
     {
-        $this->query = $_GET;
-        $this->post = $_POST;
-        $this->files = $_FILES;
+        $this->query  = $_GET;
+        $this->post   = $_POST;
+        $this->files  = $_FILES;
         $this->server = $_SERVER;
-        $this->paths = [];
+        $this->paths  = [];
 
         if ($this->isNotEncodedPostRequest()) {
             parse_str(file_get_contents('php://input'), $data);

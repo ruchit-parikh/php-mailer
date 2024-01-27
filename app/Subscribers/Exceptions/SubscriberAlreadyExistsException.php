@@ -9,9 +9,9 @@ use Throwable;
 class SubscriberAlreadyExistsException extends \Exception
 {
     /**
-     * @param Subscriber $subscriber
-     * @param string $message
-     * @param int $code
+     * @param Subscriber     $subscriber
+     * @param string         $message
+     * @param int            $code
      * @param Throwable|null $previous
      */
     public function __construct(Subscriber $subscriber, string $message = "", int $code = 0, ?Throwable $previous = null)

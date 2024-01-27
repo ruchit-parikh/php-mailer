@@ -59,9 +59,9 @@ abstract class RelationalDatabaseDriver implements DatabaseDriver
     /**
      * @param array $parts
      *
-     * @return string
-     *
      * @throws UnprocessableQuery
+     *
+     * @return string
      */
     protected function buildInsertQuery(array $parts): string
     {
@@ -95,7 +95,7 @@ abstract class RelationalDatabaseDriver implements DatabaseDriver
         }
 
         if (isset($parts['wheres']) && count($parts['wheres'])) {
-           $query .= $this->getWhereQueryString($parts['wheres']);
+            $query .= $this->getWhereQueryString($parts['wheres']);
         }
 
         if (isset($parts['limit']) && $parts['limit'] > 0) {
@@ -153,7 +153,7 @@ abstract class RelationalDatabaseDriver implements DatabaseDriver
 
     /**
      * @param string|array $value
-     * @param string $char
+     * @param string       $char
      *
      * @return string|array
      */
@@ -168,7 +168,7 @@ abstract class RelationalDatabaseDriver implements DatabaseDriver
 
             return $quoted;
         } else {
-            return $this->isQuoteExcludedKeyword($value) ? $value : sprintf($char . '%s' . $char, $value);;
+            return $this->isQuoteExcludedKeyword($value) ? $value : sprintf($char . '%s' . $char, $value);
         }
     }
 

@@ -7,11 +7,11 @@ use Mailer\Contracts\Router as BaseRouter;
 
 class Router extends BaseRouter
 {
-    const HTTP_NOT_FOUND = 404;
+    public const HTTP_NOT_FOUND = 404;
 
     /**
      * @param string $route
-     * @param array $action
+     * @param array  $action
      * @param string $request
      *
      * @return void
@@ -23,7 +23,7 @@ class Router extends BaseRouter
 
     /**
      * @param string $route
-     * @param array $action
+     * @param array  $action
      * @param string $request
      *
      * @return void
@@ -37,9 +37,9 @@ class Router extends BaseRouter
      * @param string $route
      * @param string $method
      *
-     * @return Route
-     *
      * @throws \Exception
+     *
+     * @return Route
      */
     public function search(string $route, string $method): Route
     {

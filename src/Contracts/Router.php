@@ -17,5 +17,5 @@ abstract class Router
     /**
      * @return void
      */
-    abstract function registerRoutes(): void;
+    abstract public function registerRoutes(): void;
 }

@@ -17,9 +17,9 @@ class StoreSubscriberFormRequest extends FormRequest
     {
         return [
             'first_name' => [RequiredRule::class],
-            'last_name' => [RequiredRule::class],
-            'email' => [RequiredRule::class, EmailRule::class],
-            'status' => [RequiredRule::class, new InArrayRule(Subscriber::getPossibleStatus())]
+            'last_name'  => [RequiredRule::class],
+            'email'      => [RequiredRule::class, EmailRule::class],
+            'status'     => [RequiredRule::class, new InArrayRule(Subscriber::getPossibleStatus())],
         ];
     }
 

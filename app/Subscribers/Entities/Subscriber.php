@@ -6,26 +6,26 @@ use DateTimeImmutable;
 use Mailer\Contracts\Entity;
 
 /**
- * @property int $id
- * @property string $first_name
- * @property string $last_name
- * @property string $email
- * @property int $status
+ * @property int               $id
+ * @property string            $first_name
+ * @property string            $last_name
+ * @property string            $email
+ * @property int               $status
  * @property DateTimeImmutable $subscribed_at
  * @property DateTimeImmutable $created_at
  * @property DateTimeImmutable $updated_at
  */
 class Subscriber extends Entity
 {
-    const STATUS_UNSUBSCRIBED = 0;
-    const STATUS_SUBSCRIBED = 1;
-    const STATUS_BLOCKED = 2;
+    public const STATUS_UNSUBSCRIBED = 0;
+    public const STATUS_SUBSCRIBED   = 1;
+    public const STATUS_BLOCKED      = 2;
 
     /**
      * @inheritdoc
      */
     protected array $types = [
-        'subscribed_at' => DateTimeImmutable::class
+        'subscribed_at' => DateTimeImmutable::class,
     ];
 
     /**
@@ -102,9 +102,9 @@ class Subscriber extends Entity
     private static function getPossibleStatusMeta(): array
     {
         return [
-            self::STATUS_SUBSCRIBED => ['label' => 'Subscribed', 'color' => '#00ff00'],
+            self::STATUS_SUBSCRIBED   => ['label' => 'Subscribed', 'color' => '#00ff00'],
             self::STATUS_UNSUBSCRIBED => ['label' => 'Unsubscribed', 'color' => '#ffff00'],
-            self::STATUS_BLOCKED => ['label' => 'Blocked', 'color' => '#ff0000'],
+            self::STATUS_BLOCKED      => ['label' => 'Blocked', 'color' => '#ff0000'],
         ];
     }
 
