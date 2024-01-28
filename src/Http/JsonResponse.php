@@ -19,7 +19,9 @@ class JsonResponse extends Response implements JsonSerializable
         $this->resource = $data;
 
         $this->addHeader('Content-Type', 'application/json')
-            ->addHeader('Access-Control-Allow-Origin', '*');
+            ->addHeader('Access-Control-Allow-Origin', '*')
+            ->addHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
+            ->addHeader('Access-Control-Allow-Headers', 'Content-Type');
 
         parent::__construct(json_encode($this->collect(), JSON_PRETTY_PRINT));
     }

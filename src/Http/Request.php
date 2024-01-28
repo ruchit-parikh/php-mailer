@@ -198,4 +198,12 @@ class Request extends BaseRequest
 
         return $this;
     }
+
+    /**
+     * @return bool
+     */
+    public function isPreFlight(): bool
+    {
+        return $this->getMethod() === 'OPTIONS';
+    }
 }

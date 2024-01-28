@@ -84,6 +84,12 @@ class Kernel extends BaseKernel
             header($header . ': ' . $value);
         }
 
+        if ($this->request->isPreflight()) {
+            http_response_code(200);
+
+            exit();
+        }
+
         parent::terminate($response);
     }
 }
