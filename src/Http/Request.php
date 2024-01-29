@@ -45,22 +45,30 @@ class Request extends BaseRequest
         $this->server = $_SERVER;
         $this->paths  = [];
 
-        if ($this->isNotEncodedPostRequest()) {
-            parse_str(file_get_contents('php://input'), $data);
+        if (!$this->isEncodedPostRequest() && $this->isContentTypeJSON()) {
+            $data = file_get_contents('php://input');
 
-            $this->post = $data;
+            $this->post = json_decode($data, true);
         }
     }
 
     /**
      * @return bool
      */
-    private function isNotEncodedPostRequest(): bool
+    private function isEncodedPostRequest(): bool
     {
         $contextType = $this->server['CONTENT_TYPE'] ?? '';
 
-        return str_starts_with($contextType, 'application/x-www-form-urlencoded')
+        return (str_starts_with($contextType, 'application/x-www-form-urlencoded') || str_starts_with($contextType, 'multipart/form-data'))
             && \in_array($this->getMethod(), ['PUT', 'DELETE', 'PATCH', 'POST']);
+    }
+
+    /**
+     * @return bool
+     */
+    private function isContentTypeJson(): bool
+    {
+        return $this->server['CONTENT_TYPE'] ?? '' === 'application/json';
     }
 
     /**

@@ -6,35 +6,25 @@
       return {error: false}
     },
     props: {validations: {type: Array, default: []}, for: {required: true, type: String}},
-    computed: {
-      hasError() {
-        return this.error || (typeof this.$parent.$parent.$refs[this.$props.for] !== 'undefined' &&
-            typeof this.$parent.$parent.$refs[this.$props.for].error !== 'undefined' &&
-            this.$parent.$parent.$refs[this.$props.for].error !== false);
-      }
-    },
     mounted() {
-      this.$nextTick(() => {
-        //TODO: As we dont have state we need to maintain this hierarchy or we need to implement a store/state system
-        if (this.$parent.$parent.$refs[this.$props.for]) {
-          this.$eventBus.on('mailerInput', (e) => {
-            if (typeof e.target.name !== 'undefined' && e.target.name === this.$props.for) {
-              let errors = Object.values(Validator.validate(e.target.value, this.$props.validations));
-
-              this.error = errors.length ? errors[0].replace('%s', this.$props.for.replace(/-|_/gi, ' ')) : false;
-
-              this.$parent.$parent.$refs[this.$props.for].error = this.error;
-
-              if (this.error) {
-                e.target.classList.remove('is-valid')
-                e.target.classList.add('is-invalid')
-              } else {
-                e.target.classList.remove('is-invalid')
-                e.target.classList.add('is-valid')
-              }
-            }
-          })
+      this.$validatorBus.on('mailerValidated', (errors) => {
+        for (let i in errors) {
+          if (errors.hasOwnProperty(i) && errors[i].name == this.$props.for) {
+            this.error = errors[i].error;
+            break;
+          }
         }
+      })
+      this.$nextTick(() => {
+        this.$validatorBus.on('mailerInput', (e) => {
+          if (typeof e.target.name !== 'undefined' && e.target.name === this.$props.for) {
+            let errors = Object.values(Validator.validate(e.target.value, this.$props.validations));
+
+            this.error = errors.length ? errors[0].replace('%s', this.$props.for.replace(/-|_/gi, ' ')) : false;
+
+            this.$validatorBus.emit('mailerValidated', [{name: this.$props.for, error: this.error}])
+          }
+        })
       })
     }
   }
@@ -43,6 +33,6 @@
 <template>
   <div class="form-group mb-3" v-bind="$attrs">
     <slot></slot>
-    <span class="text-danger" v-if="hasError">{{this.error ? this.error : this.$parent.$parent.$refs[this.$props.for].error}}</span>
+    <span class="text-danger" v-if="this.error !== false">{{this.error}}</span>
   </div>
 </template>

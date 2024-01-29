@@ -56,7 +56,9 @@ class SubscribersController extends Controller
             'subscribed_at' => new DateTimeImmutable,
         ]);
 
-        return new JsonResponse(['success' => $repository->store($subscriber)]);
+        $repository->store($subscriber);
+
+        return new JsonResponse(['message' => 'Subscriber created successfully.']);
     }
 
     /**

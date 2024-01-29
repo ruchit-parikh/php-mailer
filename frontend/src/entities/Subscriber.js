@@ -63,4 +63,11 @@ export default class Subscriber {
   getStatsColor() {
     return this.statusColor;
   }
+
+  /**
+   * @returns {string}
+   */
+  getSubscribedAt() {
+    return this.subscribedAt;
+  }
 }

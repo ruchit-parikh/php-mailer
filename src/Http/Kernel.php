@@ -61,9 +61,10 @@ class Kernel extends BaseKernel
 
             $controller = $controllerClass::getInstance();
 
+            /** @var Response $response */
             $response = call_user_func([$controller, $route->getMethod()], $request);
 
-            return new Response($response);
+            return $response;
         } catch (UnprocessableEntity $e) {
             header("HTTP/1.0 " . $e->getCode());
 

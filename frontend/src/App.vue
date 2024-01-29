@@ -27,6 +27,19 @@
       </div>
 
       <div class="my-3" v-else>
+        <alert
+          v-if="$route.path === '/'"
+          v-for="notification in persistentNotifications"
+          :type="notification.type"
+          :message="notification.message"
+        />
+        <alert
+            v-else
+            v-for="notification in temporaryNotifications"
+            :type="notification.type"
+            :message="notification.message"
+        />
+
         <router-view />
       </div>
     </div>

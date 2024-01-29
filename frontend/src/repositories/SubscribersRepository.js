@@ -1,7 +1,7 @@
 import ApiService from "@/services/ApiService.js";
 import Subscriber from "@/entities/Subscriber.js";
 
-class SubscriberRepository {
+class SubscribersRepository {
   constructor() {
     this.api = new ApiService('http://localhost/php-crud-api/index.php')
   }
@@ -39,4 +39,4 @@ class SubscriberRepository {
   }
 }
 
-export default SubscriberRepository = new SubscriberRepository;
+export default SubscribersRepository = new SubscribersRepository;

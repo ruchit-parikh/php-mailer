@@ -1,7 +1,7 @@
 <script>
   export default {
     props: {
-      mailerAction: {required: true},
+      mailerAction: {required: true, type: Function},
       target: {required: true}
     },
     data() {
@@ -14,7 +14,7 @@
       disableLoading() {
         this.loading = false;
       },
-      submitForm()  {
+      submitForm(e)  {
         let target = this.$parent.$refs[this.$props.target];
 
         if (target && target.enableLoading) {
@@ -23,13 +23,20 @@
           this.enableLoading()
         }
 
-        return this.mailerAction()
+        return this.mailerAction(e)
           .catch(err => {
-            for (let i in err.response.data.errors) {
-              if (err.response.data.errors.hasOwnProperty(i)) {
-                this.$parent.$refs[i].error = err.response.data.errors[i][0];
+            let errors = [];
+
+            if (err.response.data && err.response.data.errors) {
+              for (let i in err.response.data.errors) {
+                if (err.response.data.errors.hasOwnProperty(i)) {
+                  errors.push({name: i, error: err.response.data.errors[i][0]})
+                }
               }
             }
+
+            this.$validatorBus.emit('mailerValidated', errors);
+            this.$notificationBus.emit('mailerAlert', {message: err.response.data.message, type: 'danger', temporary: true})
 
             return err;
           })

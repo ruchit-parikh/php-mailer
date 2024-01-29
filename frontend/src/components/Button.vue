@@ -1,7 +1,7 @@
 <script>
   export default {
     props: {
-      'class': {default: 'btn btn-primary'}, 'type': {default: 'button'}
+      'class': {default: 'btn-primary'}, 'type': {default: 'button'}
     },
     inheritAttrs: false,
     data() {
@@ -27,7 +27,7 @@
 </script>
 
 <template>
-  <button v-bind="mergedAttributes" :disabled="loading || mergedAttributes.disable">
+  <button class="btn" v-bind="mergedAttributes" :disabled="loading || mergedAttributes.disable">
     <div v-if="loading" class="d-flex align-items-center">
       <mailer-loader class="button-loader"></mailer-loader>&nbsp;&nbsp;Loading...
     </div>
