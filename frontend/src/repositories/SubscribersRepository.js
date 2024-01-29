@@ -3,7 +3,7 @@ import Subscriber from "@/entities/Subscriber.js";
 
 class SubscribersRepository {
   constructor() {
-    this.api = new ApiService('http://localhost/php-crud-api/index.php')
+    this.api = new ApiService(window.config.API_URL)
   }
 
   /**
