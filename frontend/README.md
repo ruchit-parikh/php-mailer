@@ -19,3 +19,11 @@ npm run dev
 ```
 
 - Thats it. You are good to go
+
+Below is how it will appear
+
+[List Table](screenshots/list-page.png)
+[Create Form](screenshots/create-page.png)
+[Create Submit Errors](screenshots/create-error.png)
+[Create Email Unique Error](screenshots/create-email-unique-error.png)
+[Create Success](screenshots/create-success.png)

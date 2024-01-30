@@ -4,11 +4,10 @@ namespace Mailer\Http;
 
 use Mailer\Contracts\Route;
 use Mailer\Contracts\Router as BaseRouter;
+use Mailer\Http\Exceptions\RouteNotFoundException;
 
 class Router extends BaseRouter
 {
-    public const HTTP_NOT_FOUND = 404;
-
     /**
      * @param string $route
      * @param array  $action
@@ -64,7 +63,7 @@ class Router extends BaseRouter
             }
         }
 
-        throw new \Exception('The route that you are looking for does not exists', self::HTTP_NOT_FOUND);
+        throw new RouteNotFoundException($needle);
     }
 
     /**
