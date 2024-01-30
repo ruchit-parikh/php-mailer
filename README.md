@@ -20,6 +20,7 @@ composer install
 - That's it you are good to go for PHP server
 
 For Setting Up Vue App visit below link in frontend directory
+
 [https://github.com/ruchit-parikh/php-mailer-crud-api/blob/master/frontend/README.md](https://github.com/ruchit-parikh/php-mailer-crud-api/blob/master/frontend/README.md)
 
 ### How to scale this system to handle millions of requests and even 10 times more if needed
