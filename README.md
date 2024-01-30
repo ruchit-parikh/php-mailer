@@ -27,7 +27,7 @@ For Setting Up Vue App visit below link in frontend directory
 
 #### Setup a load balancer To serve more requests
 - We need to implement a load balancer which will distirbute our requests between multiple servers. This will give us horizontal scalling and we will be able to support millions of requests with more servers as needed and can grow
-- We can go for nginx and provide **upstrea** as list of servers if we have fixed numbers of machines, lower budget and their details and forward with **proxy_pass**. This will be useful until some time but later on we need to make this more dynamic as requests grow.
+- We can go for nginx and provide **upstream** as list of servers if we have fixed numbers of machines, lower budget and their details and forward with **proxy_pass**. This will be useful until some time but later on we need to make this more dynamic as requests grow.
 - We will choose cloud based load balancers however thats what I prefer like aws ELB, gcp etc. We can configured it on their dashboard like in aws we can create ec2 machines and then add it to group to which load balancer will redirect request to
 - We will also setup auto scalling groups which will add/remove instances/servers based on demands so when number of reqeust spikes; it will add more machines so that our app can serve those requests
 - As requests grow more and when we need more automatic deployments, we will also setup kubernates/eks which will make this scalling/deploying automatic and we wont be dependent on any specific infrastructure as everything wil run inside containers now.
@@ -51,6 +51,6 @@ For Setting Up Vue App visit below link in frontend directory
 - If needed more scale, we can separate out our worker on separate micro service and serve it there. Now as it's same as another app server, we can then increase number of workers that will serve the request, horizontally when needed by using more machines/containers and load balancers to route requests triggered by `post` endpoints
 
 #### What are the challenges that appears
-Main concern here is about writing duplicate subscribers, as we are queueing the request, there can be chances that we have multiple requests triggered before data is written actually by our queue on database as it wont exist at the time of search and we will queue its request for write. We already have **unique** constraint added which wont allow duplicate entries so our ask will failed eventually. We may need proper monitoring and logging to check, retry and handle failed queues as well.
+Main concern here is about writing duplicate subscribers, as we are queueing the request, there can be chances that we have multiple requests triggered before data is written actually by our queue on database as it wont exist at the time of search and we will queue its request for write. We already have **unique** constraint added which wont allow duplicate entries so our task will failed eventually. We may need proper monitoring and logging to check, retry and handle failed queues as well.
 
 So at the end, by using load balancer, we will scale number of request that can be served, with indexed cache we will support high read throughput and with queue we will support high write throughput -> Super fast application ^_^
