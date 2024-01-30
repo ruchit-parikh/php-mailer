@@ -22,8 +22,8 @@ npm run dev
 
 Below is how it will appear
 
-[List Table](screenshots/list-page.png)
-[Create Form](screenshots/create-page.png)
-[Create Submit Errors](screenshots/create-error.png)
-[Create Email Unique Error](screenshots/create-email-unique-error.png)
-[Create Success](screenshots/create-success.png)
+![List Table](screenshots/list-page.png)
+![Create Form](screenshots/create-page.png)
+![Create Submit Errors](screenshots/create-error.png)
+![Create Email Unique Error](screenshots/create-email-unique-error.png)
+![Create Success](screenshots/create-success.png)
