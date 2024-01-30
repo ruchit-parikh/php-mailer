@@ -41,12 +41,12 @@
             return err;
           })
           .finally(r => {
-          if (target && target.disableLoading) {
-            target.disableLoading()
-          } else {
-            this.disableLoading()
-          }
-        })
+            if (target && target.disableLoading) {
+              target.disableLoading()
+            } else {
+              this.disableLoading()
+            }
+          })
       }
     }
   }
