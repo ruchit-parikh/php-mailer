@@ -60,7 +60,7 @@ class Model
 
     protected function __construct()
     {
-        //You can't create instance of repositories outside
+        //You can't create instance of this outside
 
         $config = require __DIR__ . '/../../configuration.php';
 
