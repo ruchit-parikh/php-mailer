@@ -77,6 +77,14 @@ class Database
     }
 
     /**
+     * @return int
+     */
+    public function lastInsertedId(): int
+    {
+        return $this->pdo->lastInsertId();
+    }
+
+    /**
      * @return DatabaseDriver
      */
     public function getDriver(): DatabaseDriver

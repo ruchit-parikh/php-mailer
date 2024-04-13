@@ -66,7 +66,7 @@ class DBSubscribersRepository implements SubscribersRepository
     /**
      * @inheritDoc
      */
-    public function store(Subscriber $subscriber): bool
+    public function store(Subscriber $subscriber): int
     {
         return SubscriberModel::getInstance()
             ->query()

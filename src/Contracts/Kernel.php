@@ -22,56 +22,24 @@ abstract class Kernel
     }
 
     /**
-     * @var Router
+     * @return void
      */
-    protected Router $router;
-
-    /**
-     * @var Request
-     */
-    protected Request $request;
-
     protected function __construct()
     {
-        $routerClass  = $this->getRouterClass();
-        $this->router = new $routerClass;
-
-        $requestClass  = $this->getRequestClass();
-        $this->request = new $requestClass;
+        // You can't create kernel on your own
     }
-
-    /**
-     * @return string
-     */
-    abstract protected function getRouterClass(): string;
-
-    /**
-     * @return string
-     */
-    abstract protected function getRequestClass(): string;
 
     /**
      * @return void
      */
-    public function bootstrap(): void
-    {
-        $this->router->registerRoutes();
-
-        $this->request->collectData();
-    }
+    abstract public function bootstrap(): void;
 
     /**
-     * @return Router
-     */
-    public function getRouter(): Router
-    {
-        return $this->router;
-    }
-
-    /**
+     * @param Request $request
+     *
      * @return Response
      */
-    abstract public function serve(): Response;
+    abstract public function handle(Request $request): Response;
 
     /**
      * @param Response $response

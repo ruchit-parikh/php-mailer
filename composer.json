@@ -7,12 +7,17 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.4",
-        "phpunit/phpunit": "3.7.*"
+        "phpunit/phpunit": "^9.6"
     },
     "autoload":	{
         "psr-4": {
             "Mailer\\": "src/",
             "App\\": "app/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
         }
     },
     "scripts": {

@@ -1,6 +1,7 @@
 <?php
 
 use Mailer\Http\Kernel;
+use Mailer\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +13,9 @@ use Mailer\Http\Kernel;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$configs = require __DIR__ . '/configuration.php';
+define('ENV', 'production');
+
+$configs = require __DIR__ . '/production_configuration.php';
 
 error_reporting($configs['level']);
 ini_set('display_errors', $configs['debug']);
@@ -28,10 +31,11 @@ ini_set('display_errors', $configs['debug']);
  * TODO: Create top level container which will create and provide all singletons
  * As of now all classes which needs to be singleton are creating their instance
  */
-$kernel = Kernel::getInstance();
+$kernel  = Kernel::getInstance();
+$request = Request::prepareRequest();
 
 $kernel->bootstrap();
 
-$response = $kernel->serve();
+$response = $kernel->serve($request);
 
 $kernel->terminate($response);

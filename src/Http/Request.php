@@ -30,45 +30,36 @@ class Request extends BaseRequest
     private array $server;
 
     /**
-     * @var array
+     * @param array $get
+     * @param array $post
+     * @param array $files
+     * @param array $server
      */
-    protected array $paths;
+    public function __construct(array $get = [], array $post = [], array $files = [], array $server = [])
+    {
+        $this->query  = $get;
+        $this->post   = $post;
+        $this->files  = $files;
+        $this->server = $server;
+    }
 
     /**
      * @inheritDoc
      */
-    public function collectData(): void
+    public static function prepareRequest(): static
     {
-        $this->query  = $_GET;
-        $this->post   = $_POST;
-        $this->files  = $_FILES;
-        $this->server = $_SERVER;
-        $this->paths  = [];
+        $post                 = $_POST;
+        $contextType          = $_SERVER['CONTENT_TYPE'] ?? '';
+        $isContentTypeJSON    = $contextType === 'application/json';
+        $isEncodedPostRequest = (str_starts_with($contextType, 'application/x-www-form-urlencoded') || str_starts_with($contextType, 'multipart/form-data'))
+            && \in_array(strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET'), ['PUT', 'DELETE', 'PATCH', 'POST']);
 
-        if (!$this->isEncodedPostRequest() && $this->isContentTypeJSON()) {
+        if (!$isEncodedPostRequest && $isContentTypeJSON) {
             $data = file_get_contents('php://input');
-
-            $this->post = json_decode($data, true);
+            $post = json_decode($data, true);
         }
-    }
 
-    /**
-     * @return bool
-     */
-    private function isEncodedPostRequest(): bool
-    {
-        $contextType = $this->server['CONTENT_TYPE'] ?? '';
-
-        return (str_starts_with($contextType, 'application/x-www-form-urlencoded') || str_starts_with($contextType, 'multipart/form-data'))
-            && \in_array($this->getMethod(), ['PUT', 'DELETE', 'PATCH', 'POST']);
-    }
-
-    /**
-     * @return bool
-     */
-    private function isContentTypeJson(): bool
-    {
-        return $this->server['CONTENT_TYPE'] ?? '' === 'application/json';
+        return new static($_GET, $post, $_FILES, $_SERVER);
     }
 
     /**
@@ -90,9 +81,9 @@ class Request extends BaseRequest
     /**
      * @return string
      */
-    public function getUrlPath(): string
+    public function getRouteIdentifier(): string
     {
-        return rtrim($this->server['PHP_SELF'], '/');
+        return rtrim($this->server['PHP_SELF'], '/') . ':' . strtolower($this->getMethod());
     }
 
     /**
@@ -133,16 +124,6 @@ class Request extends BaseRequest
     public function server(string $key = null): mixed
     {
         return $key ? $this->server[$key] ?? null : $this->server;
-    }
-
-    /**
-     * @param string|null $key
-     *
-     * @return mixed
-     */
-    public function path(string $key = null): mixed
-    {
-        return $key ? $this->paths[$key] ?? null : $this->paths;
     }
 
     /**
@@ -191,18 +172,6 @@ class Request extends BaseRequest
     public function setServerConfigs(array $server): static
     {
         $this->server = $server;
-
-        return $this;
-    }
-
-    /**
-     * @param array $paths
-     *
-     * @return $this
-     */
-    public function setPaths(array $paths): static
-    {
-        $this->paths = $paths;
 
         return $this;
     }

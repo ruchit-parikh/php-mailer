@@ -31,7 +31,7 @@ interface SubscribersRepository
     /**
      * @param Subscriber $subscriber
      *
-     * @return bool
+     * @return int
      */
-    public function store(Subscriber $subscriber): bool;
+    public function store(Subscriber $subscriber): int;
 }

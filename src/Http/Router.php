@@ -2,6 +2,7 @@
 
 namespace Mailer\Http;
 
+use Mailer\Contracts\Request as BaseRequest;
 use Mailer\Contracts\Route;
 use Mailer\Contracts\Router as BaseRouter;
 use Mailer\Http\Exceptions\RouteNotFoundException;
@@ -33,16 +34,15 @@ class Router extends BaseRouter
     }
 
     /**
-     * @param string $route
-     * @param string $method
+     * @param BaseRequest $request
      *
      * @throws \Exception
      *
      * @return Route
      */
-    public function search(string $route, string $method): Route
+    public function searchWithLoadedParams(BaseRequest $request): Route
     {
-        $needle = $route . ':' . strtolower($method);
+        $needle = $request->getRouteIdentifier();
 
         foreach ($this->routes as $key => $route) {
             // domain/prefix/abc/another/2 - abc and 2 are values passed in as param, domain is variable

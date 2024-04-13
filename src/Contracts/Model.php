@@ -62,7 +62,7 @@ class Model
     {
         //You can't create instance of this outside
 
-        $config = require __DIR__ . '/../../configuration.php';
+        $config = require __DIR__ . '/../../' . ENV . '_configuration.php';
 
         $this->db = new Database($config);
     }
@@ -174,9 +174,9 @@ class Model
     /**
      * @param array $data
      *
-     * @return bool
+     * @return int
      */
-    public function insert(array $data): bool
+    public function insert(array $data): int
     {
         if (!count($data)) {
             return false;
@@ -200,7 +200,22 @@ class Model
             'columns' => array_keys($data),
         ]);
 
-        return $this->db->execute($query, array_values($data));
+        $this->db->execute($query, array_values($data));
+
+        return $this->db->lastInsertedId();
+    }
+
+    /**
+     * @return bool
+     */
+    public function delete(): bool
+    {
+        $query = $this->db->getDriver()->query([
+            'table'  => $this->table,
+            'delete' => true,
+        ]);
+
+        return $this->db->execute($query);
     }
 
     /**

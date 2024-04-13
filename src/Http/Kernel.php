@@ -5,25 +5,58 @@ namespace Mailer\Http;
 use Exception;
 use Mailer\Contracts\Controller;
 use Mailer\Contracts\Kernel as BaseKernel;
+use Mailer\Contracts\Request as BaseRequest;
 use Mailer\Contracts\Response as BaseResponse;
 use Mailer\Http\Exceptions\UnprocessableEntity;
 
 class Kernel extends BaseKernel
 {
     /**
-     * @inheritDoc
+     * @var Router
      */
-    protected function getRouterClass(): string
-    {
-        return Router::class;
-    }
+    protected Router $router;
 
     /**
      * @inheritDoc
      */
-    protected function getRequestClass(): string
+    public function bootstrap(): void
     {
-        return Request::class;
+        $this->router = new Router();
+
+        $this->router->registerRoutes();
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function serve(Request $request): Response
+    {
+        if ($request instanceof Request && $request->isPreFlight()) {
+            header('Access-Control-Allow-Origin: *');
+            header('Access-Control-Allow-Headers: Content-Type');
+
+            http_response_code(200);
+
+            exit();
+        }
+
+        try {
+            return $this->handle($request);
+        } catch (UnprocessableEntity $e) {
+            $res = new JsonResponse(['message' => $e->getMessage(), 'errors' => $e->getErrors()]);
+
+            $res->addHeader('HTTP/1.0', $e->getCode());
+
+            return $res;
+        } catch (Exception $e) {
+            $res = new JsonResponse(['message' => $e->getMessage()]);
+
+            $res->addHeader('HTTP/1.0', $e->getCode());
+
+            return $res;
+        }
     }
 
     /**
@@ -31,49 +64,44 @@ class Kernel extends BaseKernel
      *
      * @throws \Exception
      */
-    public function serve(): Response
+    public function handle(Request|BaseRequest $request): Response
     {
-        try {
-            /** @var Request $request */
-            $request = $this->request;
+        $route = $this->router->searchWithLoadedParams($request);
 
-            $route = $this->router->search($request->getUrlPath(), $request->getMethod());
+        $request->setPaths($route->getParams());
 
-            $request->setPaths($route->getParams());
+        /** @var Controller $controllerClass */
+        $controllerClass = $route->getControllerClass();
 
-            /** @var Controller $controllerClass */
-            $controllerClass = $route->getControllerClass();
+        /** @var BaseRequest $requestClass */
+        $requestClass = $route->getRequestClass();
 
-            /** @var Request $requestClass */
-            $requestClass = $route->getRequestClass();
+        if ($request instanceof Request && $request->isFormRequest()) {
+            /** @var FormRequest $requestClass */
+            $formRequest = new $requestClass;
+            $request     = $formRequest->copyFromRequest($request);
 
-            if ($request->isFormRequest()) {
-                /** @var FormRequest $requestClass */
-                $formRequest = new $requestClass;
-                $request     = $formRequest->copyFromRequest($request);
+            $errors = $request->validate();
 
-                $errors = $request->validate();
-
-                if (count($errors)) {
-                    throw new UnprocessableEntity($errors);
-                }
+            if (count($errors)) {
+                throw new UnprocessableEntity($errors);
             }
-
-            $controller = $controllerClass::getInstance();
-
-            /** @var Response $response */
-            $response = call_user_func([$controller, $route->getMethod()], $request);
-
-            return $response;
-        } catch (UnprocessableEntity $e) {
-            header("HTTP/1.0 " . $e->getCode());
-
-            return new JsonResponse(['message' => $e->getMessage(), 'errors' => $e->getErrors()]);
-        } catch (Exception $e) {
-            header("HTTP/1.0 " . $e->getCode());
-
-            return new JsonResponse(['message' => $e->getMessage()]);
         }
+
+        $controller = $controllerClass::getInstance();
+
+        /** @var Response $response */
+        $response = call_user_func([$controller, $route->getMethod()], $request);
+
+        return $response;
+    }
+
+    /**
+     * @return Router
+     */
+    public function getRouter(): Router
+    {
+        return $this->router;
     }
 
     /**
@@ -83,12 +111,6 @@ class Kernel extends BaseKernel
     {
         foreach ($response->getHeaders() as $header => $value) {
             header($header . ': ' . $value);
-        }
-
-        if ($this->request->isPreflight()) {
-            http_response_code(200);
-
-            exit();
         }
 
         parent::terminate($response);

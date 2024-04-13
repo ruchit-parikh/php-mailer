@@ -51,6 +51,10 @@ abstract class RelationalDatabaseDriver implements DatabaseDriver
             return $this->buildInsertQuery($parts);
         }
 
+        if (isset($parts['delete']) && $parts['delete']) {
+            return $this->buildDeleteQuery($parts);
+        }
+
         //TODO: We may need to add other queries like update etc
 
         return $this->buildSelectQuery($parts);
@@ -77,6 +81,22 @@ abstract class RelationalDatabaseDriver implements DatabaseDriver
             implode(',', $this->quote($parts['columns'])),
             rtrim(str_repeat('?,', count($parts['columns'])), ',')
         );
+    }
+
+    /**
+     * @param array $parts
+     *
+     * @return string
+     */
+    protected function buildDeleteQuery(array $parts): string
+    {
+        $query = 'DELETE FROM %s';
+
+        if (isset($parts['wheres']) && count($parts['wheres'])) {
+            $query .= $this->getWhereQueryString($parts['wheres']);
+        }
+
+        return sprintf($query, $this->quote($parts['table']));
     }
 
     /**
