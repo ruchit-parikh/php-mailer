@@ -31,12 +31,14 @@ class CoreRulesTest extends TestCase
         $rule = new RequiredRule;
 
         $this->assertValid($rule, 'Sample Test');
+        $this->assertValid($rule, 'false');
         $this->assertValid($rule, ['Sample', 'Test']);
         $this->assertValid($rule, ['']);
 
         $this->assertInValid($rule, '');
         $this->assertInValid($rule, '  ');
         $this->assertInValid($rule, null);
+        $this->assertInValid($rule, false);
         $this->assertInValid($rule, []);
     }
 
