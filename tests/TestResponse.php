@@ -38,4 +38,17 @@ class TestResponse
 
         return $this;
     }
+
+    /**
+     * @param string $model
+     * @param array  $data
+     *
+     * @return $this
+     */
+    public function assertDatabaseHas(string $model, array $data): static
+    {
+        Assert::assertThat($model, new HasInDatabase($data));
+
+        return $this;
+    }
 }

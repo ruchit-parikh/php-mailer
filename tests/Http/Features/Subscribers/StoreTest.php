@@ -4,6 +4,7 @@ namespace Tests\Http\Features\Subscribers;
 
 use App\Subscribers\Exceptions\SubscriberAlreadyExistsException;
 use App\Subscribers\Fakers\SubscriberFaker;
+use App\Subscribers\Models\Subscriber;
 use Tests\Http\TestCase;
 
 class StoreTest extends TestCase
@@ -29,7 +30,13 @@ class StoreTest extends TestCase
                 'email'      => 'johndoe@gmail.com',
                 'status'     => '1',
             ])
-            ->assertJson(['message' => 'Subscriber created successfully.']);
+            ->assertJson(['message' => 'Subscriber created successfully.'])
+            ->assertDatabaseHas(Subscriber::class, [
+                'first_name' => 'John',
+                'last_name'  => 'Doe',
+                'email'      => 'johndoe@gmail.com',
+                'status'     => '1',
+            ]);
     }
 
     /**

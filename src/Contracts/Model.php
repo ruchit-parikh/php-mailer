@@ -94,7 +94,7 @@ class Model
      */
     public function where(string $key, string $value, string $operator = '='): static
     {
-        if (!isset($this->wheres['AND'])) {
+        if (!isset($this->wheres['and'])) {
             $this->wheres['and'] = [];
         }
 
@@ -232,5 +232,13 @@ class Model
         }
 
         return $escaped;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTableName(): string
+    {
+        return $this->table;
     }
 }
