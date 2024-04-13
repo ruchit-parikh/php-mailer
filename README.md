@@ -19,6 +19,28 @@ composer install
 - After setting up database, you can provide its details - port, host, username, password, database on **configuration.php** file in root directory.
 - That's it you are good to go for PHP server
 
+### How to test with PHPUnit
+
+You can run below command in root directory to test all test cases. If needed you can integrate this command to be run in your pipline on each commit or pull request for your version control system
+
+```php
+./vendor/phpunit/phpunit/phpunit
+```
+
+### How to check code styles
+
+Run below command from your root directory to check code style issues. If needed you can integrate this command to be run in your pipline on each commit or pull request for your version control system
+
+```php
+./vendor/bin/php-cs-fixer check
+```
+
+In order to fix code style issues,
+
+```php
+./vendor/bin/php-cs-fixer fix
+```
+
 For Setting Up Vue App visit below link in frontend directory
 
 [https://github.com/ruchit-parikh/php-mailer-crud-api/blob/master/frontend/README.md](https://github.com/ruchit-parikh/php-mailer-crud-api/blob/master/frontend/README.md)
