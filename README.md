@@ -16,12 +16,12 @@ composer install
 ```
 
 - Once you install all dependecies, you can create a database (I have provided mysql file named as **migration.sql** in root directory). You will simply need to run that query in your database.
-- After setting up database, you can provide its details - port, host, username, password, database on **configuration.php** file in root directory.
+- After setting up database, you can provide its details - port, host, username, password, database on **production_configuration.php** file in root directory.
 - That's it you are good to go for PHP server
 
 ### How to test with PHPUnit
 
-You can run below command in root directory to test all test cases. If needed you can integrate this command to be run in your pipline on each commit or pull request for your version control system
+You can run below command in root directory to test all test cases. If needed you can integrate this command to be run in your pipline on each commit or pull request for your version control system. For setting test configuration for your database connection, edit `test_configuration.php`
 
 ```php
 ./vendor/phpunit/phpunit/phpunit
