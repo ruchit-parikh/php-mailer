@@ -11,7 +11,15 @@ class RequiredRule extends Rule
      */
     public function validate(): bool
     {
-        return !is_null($this->value) && trim($this->value) !== '' && (!is_array($this->value) || count($this->value));
+        if (is_null($this->value)) {
+            return false;
+        }
+
+        if (is_array($this->value)) {
+            return count($this->value) > 0;
+        }
+
+        return trim($this->value) !== '';
     }
 
     /**

@@ -50,11 +50,11 @@ abstract class Rule
     }
 
     /**
-     * @param string|null $value
+     * @param mixed $value
      *
      * @return $this
      */
-    public function setValue(?string $value): static
+    public function setValue($value): static
     {
         $this->value = $value;
 
